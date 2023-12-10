@@ -7,6 +7,6 @@ def hello_world():
     return {"message": "Hello World"}
 
 @app.get("/api/hellow")
-def hellow(req):
-    print("THe logs ar: " , req)
+def hellow():
+   
     return {"Message" : "Never say never"}

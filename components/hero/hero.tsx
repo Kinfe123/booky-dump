@@ -1,6 +1,7 @@
 "use client";
 import { FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/utils";
 import { motion } from "framer-motion";
+import Upload from "../upload/upload";
 
 const Hero = () => {
   return (
@@ -38,10 +39,10 @@ const Hero = () => {
         Explore the world <br /> of books with humans
       </motion.h1>
       <motion.p
-        className="mt-6 text-center text-gray-500 md:text-xl"
+        className="mt-6 text-center text-gray-500 md:text-xl font-display2 text-4xl bg-gradient-to-tr from-zinc-600/90 via-zinc-500/80 to-black/90  bg-clip-text text-transparent"
         variants={FADE_DOWN_ANIMATION_VARIANTS}
       >
-        <p className="font-display2 text-4xl bg-gradient-to-tr from-zinc-600/90 via-zinc-500/80 to-black/90  bg-clip-text text-transparent">
+        
           Curious how you&apos;ll look in 10 years? 20 years? When you&apos;re
           90? Upload a photo and find out!{" "}
           {/* <Tooltip
@@ -66,7 +67,7 @@ const Hero = () => {
                 100% free and privacy-friendly
               </span>
             </Tooltip> */}
-        </p>
+      
       </motion.p>
       <motion.div variants={FADE_DOWN_ANIMATION_VARIANTS} className="-mb-4">
         <button
@@ -74,7 +75,8 @@ const Hero = () => {
           // onClick={() => setShowUploadModal(true)}
         >
           {/* <Upload className="h-5 w-5 text-white group-hover:text-black" /> */}
-          <p>Upload a photo</p>
+          {/* <p>Upload a photo</p> */}
+          <Upload />
         </button>
       </motion.div>
     </motion.div>
