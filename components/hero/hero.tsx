@@ -6,6 +6,7 @@ import Upload from "../upload/upload";
 
 const Hero = () => {
   const signin = useClerk();
+  
   const handleClick = () => {
     signin.openSignUp();
   };
@@ -30,7 +31,7 @@ const Hero = () => {
         href="https://twitter.com/steventey/status/1616505632001232896"
         target="_blank"
         rel="noreferrer"
-        className="mx-auto mb-5 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full bg-blue-100 px-7 py-2 transition-colors hover:bg-blue-200"
+        className="mx-auto mb-2 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full bg-blue-100 px-7 py-2 transition-colors hover:bg-blue-200"
       >
         {/* <Twitter className="h-5 w-5 text-[#1d9bf0]" /> */}
         <p className="text-sm font-semibold text-[#1d9bf0]">

@@ -7,10 +7,13 @@ supabase = create_client(supabase_url, supabase_key)
 
 
 app = FastAPI()
-@app.get("/api")
+@app.get("/api/books")
 def check_db():
-    print(supabase)
-    return "Hello supabasee"
+    res = supabase.table('books').select("*").execute()
+   
+    return res.
+
+
 @app.get("/api/python")
 def hello_world():
     return {"message": "Hello World"}
