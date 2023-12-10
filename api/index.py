@@ -11,7 +11,12 @@ app = FastAPI()
 def check_db():
     res = supabase.table('books').select("*").execute()
    
-    return res.
+    return res.data
+
+@app.get("/api/users")
+def fetch_users():
+    res = supabase.table('users').select('*').execute()
+    return res.data
 
 
 @app.get("/api/python")
