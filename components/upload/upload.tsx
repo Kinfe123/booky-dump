@@ -6,18 +6,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Check, ChevronsUpDown } from "lucide-react"
+ 
+import { cn } from "@/lib/utils"
+
+import { InputForm } from "../actual-form/forms";
 
 const Upload = () => {
   return (
     <div>
       <Dialog>
-        <DialogTrigger>Open</DialogTrigger>
-        <DialogContent>
+        <DialogTrigger>Post your book</DialogTrigger>
+        <DialogContent className="font-display2">
           <DialogHeader>
-            <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+            <DialogTitle className="tracking-wide">Are you sure absolutely sure?</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+               <InputForm />
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
