@@ -19,7 +19,7 @@ const Upload = () => {
         <DialogTrigger>Post your book</DialogTrigger>
         <DialogContent className="font-display2">
           <DialogHeader>
-            <DialogTitle className="tracking-wide">Are you sure absolutely sure?</DialogTitle>
+            <DialogTitle className="tracking-wide">Spread the knowledge with human being</DialogTitle>
             <DialogDescription>
                <InputForm />
             </DialogDescription>

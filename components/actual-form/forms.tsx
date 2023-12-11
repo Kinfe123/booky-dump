@@ -20,9 +20,10 @@ import {
   Circle,
   HelpCircle,
   LucideIcon,
+  Loader2Icon,
   XCircle,
 } from "lucide-react";
-
+import { DialogClose } from "../ui/dialog";
 import { cn } from "@/lib/utils";
 import {
   Command,
@@ -40,6 +41,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
+import { spawn } from "child_process";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -61,13 +64,13 @@ const statuses: Status[] = [
     icon: HelpCircle,
   },
   {
-    value: "todo",
-    label: "Todo",
+    value: "completed",
+    label: "Completed",
     icon: Circle,
   },
   {
-    value: "in progress",
-    label: "In Progress",
+    value: "inprogress",
+    label: "InProgress",
     icon: ArrowUpCircle,
   },
   {
@@ -84,47 +87,71 @@ const statuses: Status[] = [
 
 export function InputForm() {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<Status | null>(null);
-
+  const user = useUser();
+  const clerk = useClerk();
+  if (!user.isSignedIn) {
+    clerk.openSignUp();
+    clerk.redirectToSignIn();
+  }
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: "",
-   
     },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-
-      toast({
-          title: "You submitted the following values:",
-          description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+    console.log("The selected values : ", data, " and ", selectedStatus?.value);
+  }
+  const createBooks = async () => {
+    const fetcher = await fetch("/api/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        status: selectedStatus?.value,
+        user_id: user.user?.id,
+      }),
     });
-    console.log('The selected values : ' , data.name  , ' and ', selectedStatus?.value )
+    const resp = await fetcher.json();
+
+    return resp;
+  };
+
+  async function handleClicks(e) {
+    setLoading(true);
+
+    const res = await createBooks();
+
+    setLoading(false);
+    if (res[0].id) {
+      return toast({
+        title: "You submitted the following values:",
+        description: "You have successfully created a book called something ",
+        variant: "default",
+      });
+    } else {
+      return toast({
+        title: "Failed Posting The Book:",
+        description: "You have failed request on creating the book ",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="De javu" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+    <form>
+      <div className="w-2/3 space-y-6">
+        <Input
+          placeholder="De javu"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <div>
@@ -142,7 +169,7 @@ export function InputForm() {
                     {selectedStatus.label}
                   </>
                 ) : (
-                  <>+ Set status</>
+                  <>+- Set status</>
                 )}
               </Button>
             </PopoverTrigger>
@@ -186,9 +213,21 @@ export function InputForm() {
             </PopoverContent>
           </Popover>
         </div>
+        {/* <DialogClose asChild> */}
 
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+        <Button onClick={handleClicks} type="submit">
+          {loading ? (
+            <span className="flex gap-2">
+              {" "}
+              <Loader2Icon className="animate-spin w-5 h-5" />
+              Submitting{" "}
+            </span>
+          ) : (
+            <span>Submit</span>
+          )}
+        </Button>
+        {/* </DialogClose> */}
+      </div>
+    </form>
   );
 }

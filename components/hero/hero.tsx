@@ -1,14 +1,15 @@
 "use client";
 import { FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { useSignIn, useClerk } from "@clerk/nextjs";
+import { useSignIn, useClerk, useUser } from "@clerk/nextjs";
 import Upload from "../upload/upload";
 
 const Hero = () => {
   const signin = useClerk();
-  
+  const user = useUser();
+
   const handleClick = () => {
-    signin.openSignUp();
+    signin.redirectToSignIn();
   };
   return (
     <motion.div
@@ -50,17 +51,22 @@ const Hero = () => {
       >
         Wondering the land of the books and knowledge across the world of books!{" "}
         <div className="flex justify-center items-center gap-2">
-          <motion.div variants={FADE_DOWN_ANIMATION_VARIANTS} className="-mb-4">
-            <button  onClick={handleClick} className="group mx-auto mt-6 flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-            
-              {" "}
-              Sign In
-            </button>
-          </motion.div>
-          <motion.div variants={FADE_DOWN_ANIMATION_VARIANTS} className="-mb-4">
-            <button
-              className="group mx-auto mt-6 flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+          {!user.user && (
+            <motion.div
+              variants={FADE_DOWN_ANIMATION_VARIANTS}
+              className="-mb-4"
             >
+              <button
+                onClick={handleClick}
+                className="group mx-auto mt-6 flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+              >
+                {" "}
+                Sign In
+              </button>
+            </motion.div>
+          )}
+          <motion.div variants={FADE_DOWN_ANIMATION_VARIANTS} className="-mb-4">
+            <button className="group mx-auto mt-6 flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
               <Upload />
             </button>
           </motion.div>
