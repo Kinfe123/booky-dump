@@ -1,8 +1,7 @@
 # Hmmm..
 Just another web
 
-This is just a CRUD Template with Nextjs + Shadcn + Tailwindcss + FastAPI + Supabase (BaaS) + Serveless 
-
+This is just a CRUD Template with Nextjs + Shadcn + Tailwindcss + Serverless FastAPI + Supabase (BaaS) 
 ```bash 
 git clone https://github.com/Kinfe123/booky-dump
 ```
