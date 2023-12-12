@@ -79,11 +79,11 @@ function getIcons(value: any) {
   }
 }
 
-export function CardPost({ book  , fetcher}: any) {
+export function CardPost({ book, fetcher }: any) {
   // console.log("Books; " , book)
   const [selected, setSelected] = useState("Incompleted");
   const [open, setOpen] = useState(false);
-  const [deleteLoading , setDeleteLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false);
   // console.log("TH book status: " , book)
   const [selectedStatus, setSelectedStatus] = useState<Status | null>({
     icon: getIcons(book.status),
@@ -91,8 +91,8 @@ export function CardPost({ book  , fetcher}: any) {
     value: book.status,
   });
   const user = useUser();
-  const updateBook = async (bookID , values) => {
-    console.log('ttHE values: ' , values)
+  const updateBook = async (bookID: any, values: string) => {
+    // console.log('ttHE values: ' , values)
 
     const req = await fetch("/api/books", {
       method: "PUT",
@@ -104,19 +104,18 @@ export function CardPost({ book  , fetcher}: any) {
         // id: book
         id: bookID,
         name: book.name,
-        status:values,
+        status: values,
         user_id: user.user?.id,
       }),
     });
     const res = await req.json();
-    console.log('The result is: ' , res)
-    fetcher()
-
+    console.log("The result is: ", res);
+    fetcher();
   };
   const deleteBook = async (bookID: any) => {
-    setDeleteLoading(true)
+    setDeleteLoading(true);
     const req = await fetch("/api/books", {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -130,28 +129,30 @@ export function CardPost({ book  , fetcher}: any) {
       }),
     });
     const res = await req.json();
-    fetcher()
-    setDeleteLoading(false)
-  
-  }; 
+    fetcher();
+    setDeleteLoading(false);
+  };
   return (
     <Card className="font-display2 relative bg-gradient-to-br from-emerald-50/5 to-purple-100/10">
       <CardHeader>
         <CardTitle>{book.name}</CardTitle>
         <CardDescription>Book Description goes here</CardDescription>
         <div className="absolute top-[-10px] right-[10px]">
-          <button onClick={() => {
-            deleteBook(book.id)
-          }}className="group mx-auto mt-6 flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+          <button
+            onClick={() => {
+              deleteBook(book.id);
+            }}
+            className="group mx-auto mt-6 flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+          >
             {deleteLoading ? (
-          <span className="flex gap-2">
-            {" "}
-            <Loader2Icon className="animate-spin w-5 h-5" />
-            Deleting...{" "}
-          </span>
-        ) : (
-          <span>Delete</span>
-        )}
+              <span className="flex gap-2">
+                {" "}
+                <Loader2Icon className="animate-spin w-5 h-5" />
+                Deleting...{" "}
+              </span>
+            ) : (
+              <span>Delete</span>
+            )}
           </button>
         </div>
       </CardHeader>
@@ -207,7 +208,7 @@ export function CardPost({ book  , fetcher}: any) {
                                 (priority) => priority.value === value
                               ) || null
                             );
-                            updateBook(book.id , value);
+                            updateBook(book.id, value);
                             setOpen(false);
                           }}
                         >
