@@ -53,24 +53,26 @@ const Explore = () => {
           // </div>
 
           <>
-            <div>
-              <Skeleton className="h-5 w-1/5 mb-1" />
+            <div className="w-[300px] flex justify-center flex-col items-start">
+              <Skeleton className="h-10 w-full mb-1" />
 
               <Skeleton className="h-4 w-4/5 mb-1" />
               <Skeleton className="h-20 w-4/5" />
             </div>
-            <div>
-              <Skeleton className="h-5 w-1/5 mb-1" />
+            <div className="w-[300px] flex justify-center flex-col items-start">
+              <Skeleton className="h-10 w-full mb-1" />
 
               <Skeleton className="h-4 w-4/5 mb-1" />
               <Skeleton className="h-20 w-4/5" />
             </div>
-            <div>
-              <Skeleton className="h-5 w-1/5 mb-1" />
+            <div className="w-[300px] flex justify-center flex-col items-start">
+              <Skeleton className="h-10 w-full mb-1" />
 
               <Skeleton className="h-4 w-4/5 mb-1" />
               <Skeleton className="h-20 w-4/5" />
             </div>
+          
+            
           </>
         )}
 
