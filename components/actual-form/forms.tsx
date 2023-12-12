@@ -124,7 +124,7 @@ export function InputForm() {
     return resp;
   };
 
-  async function handleClicks(e) {
+  async function handleClicks(e:any) {
     setLoading(true);
 
     const res = await createBooks();

@@ -39,6 +39,7 @@ const Explore = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 ">
         {data ? (
+          //@ts-ignore
           data!.map((book: any) => {
             return (
               <div className="" key={book.id}>
