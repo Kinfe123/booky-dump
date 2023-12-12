@@ -107,6 +107,7 @@ export function CardPost({ book  , fetcher}: any) {
       }),
     });
     const res = await req.json();
+    console.log('The result is: ' , res)
     fetcher()
 
   };
@@ -132,7 +133,7 @@ export function CardPost({ book  , fetcher}: any) {
   
   }; 
   return (
-    <Card className="font-display2 relative">
+    <Card className="font-display2 relative bg-gradient-to-br from-emerald-50/5 to-purple-100/10">
       <CardHeader>
         <CardTitle>{book.name}</CardTitle>
         <CardDescription>Book Description goes here</CardDescription>
