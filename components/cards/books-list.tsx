@@ -84,14 +84,16 @@ export function CardPost({ book  , fetcher}: any) {
   const [selected, setSelected] = useState("Incompleted");
   const [open, setOpen] = useState(false);
   const [deleteLoading , setDeleteLoading] = useState(false)
-  console.log("TH book status: " , book)
+  // console.log("TH book status: " , book)
   const [selectedStatus, setSelectedStatus] = useState<Status | null>({
     icon: getIcons(book.status),
     label: book.status,
     value: book.status,
   });
   const user = useUser();
-  const updateBook = async (bookID: any) => {
+  const updateBook = async (bookID , values) => {
+    console.log('ttHE values: ' , values)
+
     const req = await fetch("/api/books", {
       method: "PUT",
       headers: {
@@ -102,7 +104,7 @@ export function CardPost({ book  , fetcher}: any) {
         // id: book
         id: bookID,
         name: book.name,
-        status: selectedStatus?.value,
+        status:values,
         user_id: user.user?.id,
       }),
     });
@@ -205,7 +207,7 @@ export function CardPost({ book  , fetcher}: any) {
                                 (priority) => priority.value === value
                               ) || null
                             );
-                            updateBook(book.id);
+                            updateBook(book.id , value);
                             setOpen(false);
                           }}
                         >
