@@ -1,9 +1,19 @@
+import os
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from supabase import Client , create_client
 from pydantic import BaseModel
 from api.models import Book , BookUpdate
-supabase_url="https://lwbrieedpabydhggagss.supabase.co"
-supabase_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3YnJpZWVkcGFieWRoZ2dhZ3NzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDIwNzU0NTIsImV4cCI6MjAxNzY1MTQ1Mn0.7Yu5NacEbQmRaeNfA0btLo0qdkooXHuSxF_vE8KRg14"
+
+load_dotenv()
+
+
+
+
+#Supbase configs for creatign supabase client 
+supabase_url = os.getenv("SUPABASE_URL")
+supabase_key = os.getenv("SUPABASE_KEY")
+# print('The supabase configs are: ' , supabase_key , supabase_url)
 supabase = create_client(supabase_url, supabase_key)
 
 
@@ -11,7 +21,6 @@ app = FastAPI()
 @app.get("/api/books")
 def fetch_books():
     res = supabase.table('books').select("*").execute()
-   
     return res.data
 
 @app.get("/api/users")
